@@ -414,12 +414,12 @@
       RateOfInterestTime,
       RateOfInterestAmount,
       SelectedRoi;
-
+//changed//
     if (typeof wNumb !== "undefined") {
       var AmountFormat = wNumb({
-        decimals: 0,
+        decimals: 2,
         thousand: ",",
-        prefix: "$",
+        prefix: "R",
       });
       var AmountFormatNoMerge = wNumb({
         decimals: 0,
@@ -465,14 +465,14 @@
     }
 
     //   Activate Range Sliders
-
+//changed//
     if (mySlider && mySliderMonth && mySliderYear) {
       noUiSlider.create(mySlider, {
-        start: [15000],
+        start: [2500],
         connect: "lower",
         range: {
-          min: 5000,
-          max: 150000,
+          min: 1000,
+          max: 5000,
         },
         format: wNumb({
           decimals: 0,
@@ -480,25 +480,20 @@
         pips: {
           mode: "values",
           density: 100,
-
-          values: [5000, 25000, 50000, 75000, 100000, 125000, 150000],
+          values: [1000, 2000, 3000, 4000, 5000],
           stepped: true,
           format: wNumb({
-            encoder: function (a) {
-              return a / 1000;
-            },
             decimals: 0,
-            prefix: "$",
-            suffix: "k",
+            prefix: "R",
           }),
         },
       });
       noUiSlider.create(mySliderMonth, {
-        start: [18],
+        start: [3],
         connect: "lower",
         range: {
-          min: 12,
-          max: 48,
+          min: 1,
+          max: 6,
         },
         format: wNumb({
           decimals: 0,
@@ -506,8 +501,7 @@
         pips: {
           mode: "values",
           density: 100,
-
-          values: [12, 18, 24, 30, 36, 42, 48],
+          values: [1, 2, 3, 4, 5, 6],
           stepped: true,
           format: wNumb({
             decimals: 0,
@@ -584,11 +578,15 @@
         CalculateAmount();
       });
       mySliderYear.noUiSlider.on("update", function (values, handle) {
-        selectedTime = {
-          type: "year",
-          value: TimeFormatYears.from(values[handle]),
-        };
-        CalculateAmount();
+
+        if ($("#yearTab").hasClass("active")) {
+          selectedTime = {
+            type: "year",
+            value: TimeFormatYears.from(values[handle]),
+          };
+
+          CalculateAmount();
+        }
       });
       inputMonthFormat.addEventListener("change", function () {
         if ($("#monthTab.active").length > 0) {
@@ -616,16 +614,18 @@
         $(".active_bar").addClass("left");
         mySliderMonth.noUiSlider.on("update", function (values, handle) {
           selectedTime = {
-            type: "month",
+            type: "months",
             value: TimeFormatMonths.from(values[handle]),
           };
           CalculateAmount();
         });
       });
+      // Weekly duration is not used by Muyanalo.
       $("#weekTab-tab").on("click", function () {
+        $(".active_bar").removeClass("left");
         mySliderWeekly.noUiSlider.on("update", function (values, handle) {
           selectedTime = {
-            type: "week",
+            type: "Weeks",
             value: TimeFormatWeeks.from(values[handle]),
           };
           CalculateAmount();
@@ -790,12 +790,11 @@
         }
       }
 
-      var TotalRateOfInterest = SelectedRoi
-        ? SelectedRoi / 100
-        : (RateOfInterestAmount + RateOfInterestTime) / 100;
+      var TotalRateOfInterest = 0.30;
 
       var TotalInterest = SelectedAmount * TotalRateOfInterest;
-      var InterestAndPrincipal = TotalInterest + SelectedAmount;
+
+      var InterestAndPrincipal = SelectedAmount + TotalInterest;
 
       if ($(inputFormat).hasClass("noTextMerge")) {
         inputFormat.value = AmountFormatNoMerge.to(SelectedAmount);
@@ -824,7 +823,9 @@
         AmountFormat.to(InterestAndPrincipal / selectedTime.value) + "*"
       );
       $("#InterestPayable").text(AmountFormat.to(TotalInterest) + "*");
-      $("#InterestAmount").text((TotalRateOfInterest * 100).toFixed(2));
+      $("#InterestAmount").text(
+          (TotalRateOfInterest * 100).toFixed(0) + "%"
+      );
 
       var loanGraphEl = $("#loan_graph_circle");
       var percent = (100 * TotalInterest) / InterestAndPrincipal;
