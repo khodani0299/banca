@@ -2375,6 +2375,7 @@ header .header-top .header-info-right ul li i {
 /*----------------------------------------*/
 .breadcrumb-widget {
   text-align: center;
+  min-height: 500px;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -2387,7 +2388,7 @@ header .header-top .header-info-right ul li i {
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(51, 62, 72, 0.8);
+  background-color: transparent;;
 }
 .breadcrumb-widget .breadcrumb-content {
   position: relative;
@@ -2545,7 +2546,7 @@ header .header-top .header-info-right ul li i {
   margin-left: 8px;
 }
 .breadcrumb-widget.breadcrumb-widget-3::after {
-  background-color: rgba(24, 23, 61, 0.8);
+  background-color: transparent;
 }
 
 /*============= banner-saas-area css ================*/
@@ -4338,6 +4339,12 @@ header .header-top .header-info-right ul li i {
 .about-area .cash-img {
   position: relative;
   display: inline-block;
+}
+.about-area .cash-img img.img-fluid {
+  width: 900px;
+  max-width: 100%;
+  height: 500px;
+
 }
 .about-area .cash-img .msg-1 {
   position: absolute;
@@ -6734,21 +6741,28 @@ header .header-top .header-info-right ul li i {
 .job-application-modal .modal-dialog .modal-content .modal-body .theme-btn:hover {
   color: #fff;
 }
-.job-application-modal .modal-dialog .dropzone {
+.job-application-modal .modal-dialog .dropzone,dropzone1,dropzone2 {
   padding: 20px 0;
   background-color: var(--bs-white);
   border: 2px dashed #dcdee0;
   border-radius: 5px;
 }
-.job-application-modal .modal-dialog .dropzone:hover {
+.job-application-modal .modal-dialog .dropzone,dropzone1,dropzone2:hover {
   border-color: var(--brand_color);
 }
-.job-application-modal .modal-dialog .dropzone .dz-message .dz-button {
+.job-application-modal .modal-dialog .dropzone ,dropzone1,dropzone2.dz-message .dz-button {
   font-family: "Roboto", sans-serif;
   font-weight: 700;
   color: var(--brand_color);
   font-size: 17px;
   margin-bottom: 0;
+}
+#dropzone,
+#dropzone1,
+#dropzone2 {
+  min-height: 270px;
+  height: 270px;
+  padding: 10px;
 }
 .job-application-modal .label {
   font-size: 16px;
@@ -10374,10 +10388,11 @@ body.body_dark .banner-area-3,
 body.body_dark .banner-saas-area {
   background: var(--sec-bg-color) !important;
 }
-body.body_dark .banner-area-2,
-body.body_dark .loan-slider .single-slide,
-body.body_dark .loan-slider .slick-arrow {
-  background-image: linear-gradient(180deg, #131417 0%, #131417 100%) !important;
+body.body_dark .banner-area-2.loan-banner::before,
+body.body_dark .banner-area-2.loan-banner::after {
+  background: transparent !important;
+  opacity: 0 !important;
+  min-height: 650px;
 }
 body.body_dark .feature-job-description,
 body.body_dark .feature-card-widget-8,
@@ -10615,4 +10630,13 @@ body.body_dark body.body_dark .banner-area-5 .basic-loan-calculator .form-contro
   align-items: center;
   cursor: pointer;
 }
+
+
+.banner-area-2.loan-banner::before,
+.banner-area-2.loan-banner::after {
+  background: transparent !important;
+  opacity: 0 !important;
+}
+
+
 /*# sourceMappingURL=style.css.map */

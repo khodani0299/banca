@@ -400,7 +400,7 @@
       });
     }
 
-    //initilalize DropeZone
+    // Initialize Dropzone 1 - ID Card
     if ($("#dropzone").length) {
       $("#dropzone").dropzone({
         paramName: "file",
@@ -408,6 +408,21 @@
       });
     }
 
+// Initialize Dropzone 2 - Latest Payslip
+    if ($("#dropzone1").length) {
+      $("#dropzone1").dropzone({
+        paramName: "file",
+        url: "upload-target",
+      });
+    }
+
+// Initialize Dropzone 3 - Bank Statements
+    if ($("#dropzone2").length) {
+      $("#dropzone2").dropzone({
+        paramName: "file",
+        url: "upload-target",
+      });
+    }
     // ------- Emi Calculator --------- //
     var SelectedAmount,
       selectedTime = {},
@@ -493,7 +508,7 @@
         connect: "lower",
         range: {
           min: 1,
-          max: 6,
+          max: 5,
         },
         format: wNumb({
           decimals: 0,
@@ -501,7 +516,7 @@
         pips: {
           mode: "values",
           density: 100,
-          values: [1, 2, 3, 4, 5, 6],
+          values: [1, 2, 3, 4, 5],
           stepped: true,
           format: wNumb({
             decimals: 0,
@@ -790,7 +805,7 @@
         }
       }
 
-      var TotalRateOfInterest = 0.30;
+      var TotalRateOfInterest = 0.40;
 
       var TotalInterest = SelectedAmount * TotalRateOfInterest;
 
