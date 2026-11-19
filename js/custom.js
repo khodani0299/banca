@@ -395,6 +395,7 @@
     //initilalize Telephone Input Country
     if ($("#inputPhoneNumber").length) {
       $("#inputPhoneNumber").intlTelInput({
+        initialCountry: "za",
         separateDialCode: false,
         utilsScript: "js/utils.js",
       });
@@ -423,6 +424,59 @@
         url: "upload-target",
       });
     }
+    // Validate Required Document Uploads
+
+    // Validate Required Document Uploads
+    $("#documentUploadForm").on("submit", function (event) {
+
+      // Stop the normal form submission
+      event.preventDefault();
+
+      var idCardElement = document.querySelector("#dropzone");
+      var payslipElement = document.querySelector("#dropzone1");
+      var bankStatementsElement = document.querySelector("#dropzone2");
+
+      var idCard = idCardElement ? idCardElement.dropzone : null;
+      var payslip = payslipElement ? payslipElement.dropzone : null;
+      var bankStatements = bankStatementsElement ? bankStatementsElement.dropzone : null;
+
+      var isValid = true;
+
+      // Clear previous errors
+      $(".upload-error").text("");
+
+      // Check ID Card
+      if (!idCard || idCard.getAcceptedFiles().length < 1) {
+        $("#idCardError").text("Please upload your ID Card.");
+        isValid = false;
+      }
+
+      // Check Latest Payslip
+      if (!payslip || payslip.getAcceptedFiles().length < 1) {
+        $("#payslipError").text("Please upload your latest payslip.");
+        isValid = false;
+      }
+
+      // Check Bank Statements
+      if (!bankStatements || bankStatements.getAcceptedFiles().length < 1) {
+        $("#bankStatementsError").text("Please upload your three months' bank statements.");
+        isValid = false;
+      }
+
+      // Stop if documents are missing
+      if (!isValid) {
+        return false;
+      }
+
+      // Show success message
+      $("#successMessageBox").css("display", "flex");
+// OK Button - Redirect to Homepage
+      $("#successOkButton").on("click", function () {
+        window.location.href = "index.html";
+      });
+    });
+
+
     // ------- Emi Calculator --------- //
     var SelectedAmount,
       selectedTime = {},
@@ -483,7 +537,7 @@
 //changed//
     if (mySlider && mySliderMonth && mySliderYear) {
       noUiSlider.create(mySlider, {
-        start: [2500],
+        start: [1000],
         connect: "lower",
         range: {
           min: 1000,
@@ -504,7 +558,7 @@
         },
       });
       noUiSlider.create(mySliderMonth, {
-        start: [3],
+        start: [1],
         connect: "lower",
         range: {
           min: 1,

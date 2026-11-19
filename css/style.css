@@ -10638,5 +10638,177 @@ body.body_dark body.body_dark .banner-area-5 .basic-loan-calculator .form-contro
   opacity: 0 !important;
 }
 
+/* Preloader logo */
+#ctn-preloader .round_spinner .text img {
+  width: 150px;
+  height: 150px;
+  max-width: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  margin: 0 auto;
+}
 
+.banner-img {
+  width: 130%;
+  max-width: 650px;
+}
+
+.banner-img .main-img {
+  width: 100% !important;
+  max-width: none !important;
+  height: auto;
+  display: block;
+}
+
+
+
+
+/* DAY MODE */
+#banner_animation {
+  background: #ffffff !important;
+  transition: background 0.4s ease;
+}
+
+#banner_animation .banner-content h1,
+#banner_animation .banner-content p {
+  color: #000000 !important;
+}
+
+/* NIGHT MODE */
+body.body_dark #banner_animation {
+  background: #000000 !important;
+  transition: background 0.4s ease;
+}
+
+body.body_dark #banner_animation .banner-content h1,
+body.body_dark #banner_animation .banner-content p {
+  color: #ffffff !important;
+}
+/*----------------------------------------*/
+/*   Testimonial profile pictures CSS
+/*----------------------------------------*/
+
+
+.client-slider-2 .client-info img {
+  width: 50px !important;
+  height: 50px !important;
+  min-width: 50px;
+  max-width: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.upload-error {
+  color: red;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+
+
+
+/* Success Message Background */
+.success-overlay {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+
+  justify-content: center;
+  align-items: center;
+}
+
+/* Message Box on docs */
+.success-message-box {
+  width: 90%;
+  max-width: 450px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+  animation: messageAppear 0.3s ease;
+}
+
+/* Header */
+.success-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.success-header h3 {
+  font-size: 20px;
+  color: #222222;
+  margin: 0;
+}
+
+/* Information Icon */
+.success-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #2878d0;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: serif;
+}
+
+/* Message */
+.success-body {
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 15px;
+}
+
+.success-body p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333333;
+  margin: 0;
+}
+
+/* Footer */
+.success-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 15px;
+}
+
+thats my footer css . help me add the code that will reduce the image size
+
+.success-footer button {
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  padding: 7px 20px;
+  color: #333333;
+  cursor: pointer;
+}
+
+.success-footer button:hover {
+  background: #eeeeee;
+}
+
+/* Animation */
+@keyframes messageAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 /*# sourceMappingURL=style.css.map */
