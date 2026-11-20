@@ -10811,4 +10811,360 @@ thats my footer css . help me add the code that will reduce the image size
     transform: scale(1);
   }
 }
+
+
+
+
+   /* MAIN CALCULATOR */
+ .loan-calculator-section {
+   background: #111214;
+   padding: 10px 12px;
+   color: #ffffff;
+ }
+
+.loan-calculator-container {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: 30px;
+  max-width: 1400px;
+  margin: auto;
+}
+
+/* LEFT AND RIGHT BOXES */
+.loan-settings,
+.calculator-results {
+  background: #111214;
+  border: 1px solid #454545;
+  border-radius: 11px;
+  padding: 42px 45px;
+  min-width: 0;
+}
+
+/* FIELD HEADINGS */
+.field-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.field-header h6,
+.interest-box h6 {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* READ ONLY TEXTBOXES */
+.field-header input {
+  width: 150px;
+  height: 38px;
+  background: #292c34;
+  border: 1px solid #555963;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+  cursor: default;
+}
+
+/* SLIDERS */
+.calculator-field input[type="range"] {
+  width: 100%;
+  height: 5px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: linear-gradient(
+          to right,
+          #3185e9 0%,
+          #3185e9 var(--progress, 0%),
+          #ffffff var(--progress, 0%),
+          #ffffff 100%
+  );
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* SLIDER THUMB */
+.calculator-field input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 11px;
+  height: 11px;
+  background: #3185e9;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.calculator-field input[type="range"]::-moz-range-thumb {
+  width: 11px;
+  height: 11px;
+  background: #3185e9;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* SLIDER LABELS */
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  color: #b9c0cc;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.duration-field {
+  margin-top: 55px;
+}
+
+.duration-labels {
+  padding: 0 3px;
+}
+
+/* INTEREST BOX */
+.interest-box {
+  border: 1px solid #454545;
+  border-radius: 5px;
+  padding: 12px 23px;
+  width: 171px;
+  margin-top: 65px;
+}
+
+.interest-box p {
+  color: #3185e9;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 12px 0 0;
+}
+
+/* RESULTS TOP */
+.results-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.results-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.result-item h6 {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 7px;
+}
+
+.blue-dot,
+.purple-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.blue-dot {
+  background: #3185e9;
+}
+
+.purple-dot {
+  background: #c218ff;
+}
+
+.result-description {
+  color: #ffffff;
+  font-size: 14px;
+  margin-left: 15px;
+}
+
+.result-item p {
+  color: #3185e9;
+  font-size: 17px;
+  font-weight: 700;
+  margin: 13px 0 0 15px;
+}
+
+.interest-result {
+  margin-top: 25px;
+}
+
+.interest-result p {
+  color: #c218ff;
+}
+
+/* PIE CHART */
+.pie-chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.pie-chart {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: conic-gradient(
+          #c218ff 0deg 102.86deg,
+          #3185e9 102.86deg 360deg
+  );
+  position: relative;
+}
+
+.pie-chart::after {
+  content: "";
+  position: absolute;
+  inset: 11px;
+  background: #111214;
+  border-radius: 50%;
+}
+
+/* MONTHLY RESULT */
+.monthly-result {
+  text-align: center;
+  margin-top: 70px;
+}
+
+.monthly-result h4 {
+  color: #ffffff;
+  font-size: 23px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.monthly-result h1 {
+  color: #ffffff;
+  font-size: 38px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* APPLY BUTTON */
+.apply-button {
+  display: inline-block;
+  background: #3185e9;
+  color: #ffffff;
+  padding: 17px 40px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 45px;
+  transition: 0.3s ease;
+}
+
+.apply-button:hover {
+  background: #1768cb;
+  color: #ffffff;
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 991px) {
+
+  .loan-calculator-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .loan-settings,
+  .calculator-results {
+    padding: 30px 25px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .loan-settings,
+  .calculator-results {
+    padding: 25px 17px;
+  }
+
+  .field-header input {
+    width: 125px;
+    font-size: 14px;
+  }
+
+  .field-header h6 {
+    font-size: 14px;
+  }
+
+  .results-top {
+    flex-wrap: wrap;
+  }
+
+  .pie-chart {
+    width: 100px;
+    height: 100px;
+  }
+
+  .monthly-result h1 {
+    font-size: 30px;
+  }
+
+  .monthly-result {
+    margin-top: 45px;
+  }
+
+}
+/* Slider wrapper */
+.range-slider-wrap {
+  position: relative;
+  width: 100%;
+  height: 15px;
+  display: flex;
+  align-items: center;
+}
+
+/* Slider */
+.range-slider-wrap input[type="range"] {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin: 0;
+}
+
+/* Small vertical slider markings */
+.slider-ticks {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 14px;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.slider-ticks span {
+  width: 1px;
+  height: 13px;
+  background: #ffffff;
+}
+
+/* Keep the slider thumb above the markings */
+.range-slider-wrap input[type="range"]::-webkit-slider-thumb {
+  position: relative;
+  z-index: 4;
+}
+
+.range-slider-wrap input[type="range"]::-moz-range-thumb {
+  position: relative;
+  z-index: 4;
+}
+
+
 /*# sourceMappingURL=style.css.map */

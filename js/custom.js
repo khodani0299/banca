@@ -477,453 +477,7 @@
     });
 
 
-    // ------- Emi Calculator --------- //
-    var SelectedAmount,
-      selectedTime = {},
-      RateOfInterestTime,
-      RateOfInterestAmount,
-      SelectedRoi;
-//changed//
-    if (typeof wNumb !== "undefined") {
-      var AmountFormat = wNumb({
-        decimals: 2,
-        thousand: ",",
-        prefix: "R",
-      });
-      var AmountFormatNoMerge = wNumb({
-        decimals: 0,
-        thousand: ",",
-      });
 
-      var TimeFormatMonths = wNumb({
-        suffix: " months",
-      });
-      var TimeFormatYears = wNumb({
-        suffix: " years",
-      });
-      var TimeFormatWeeks = wNumb({
-        suffix: " weeks",
-      });
-      var RoiFormat = wNumb({
-        suffix: " %",
-      });
-    }
-
-    //Slider Elements
-    var mySlider = document.getElementById("RangeSlider");
-    var mySliderMonth = document.getElementById("MonthRangeSlider");
-    var mySliderWeekly = document.getElementById("WeekRangeSlider");
-    var mySliderYear = document.getElementById("YearRangeSlider");
-    var mySliderROI = document.getElementById("RoiRangeSlider");
-    //-----home page 1
-    var SliderAmount = document.getElementById("SliderAmount");
-    var SliderPeriod = document.getElementById("SliderPeriod");
-
-    function clickOnPip(sliderName, This) {
-      var value = Number(This.getAttribute("data-value"));
-      sliderName.noUiSlider.set(value);
-    }
-
-    function SetPipsOnSlider(PipsName, sliderName) {
-      for (var i = 0; i < PipsName.length; i++) {
-        PipsName[i].style.cursor = "pointer";
-        PipsName[i].addEventListener("click", function () {
-          clickOnPip(sliderName, this);
-        });
-      }
-    }
-
-    //   Activate Range Sliders
-//changed//
-    if (mySlider && mySliderMonth && mySliderYear) {
-      noUiSlider.create(mySlider, {
-        start: [1000],
-        connect: "lower",
-        range: {
-          min: 1000,
-          max: 5000,
-        },
-        format: wNumb({
-          decimals: 0,
-        }),
-        pips: {
-          mode: "values",
-          density: 100,
-          values: [1000, 2000, 3000, 4000, 5000],
-          stepped: true,
-          format: wNumb({
-            decimals: 0,
-            prefix: "R",
-          }),
-        },
-      });
-      noUiSlider.create(mySliderMonth, {
-        start: [1],
-        connect: "lower",
-        range: {
-          min: 1,
-          max: 5,
-        },
-        format: wNumb({
-          decimals: 0,
-        }),
-        pips: {
-          mode: "values",
-          density: 100,
-          values: [1, 2, 3, 4, 5],
-          stepped: true,
-          format: wNumb({
-            decimals: 0,
-          }),
-        },
-      });
-      noUiSlider.create(mySliderYear, {
-        start: [5],
-        connect: "lower",
-        range: {
-          min: 2,
-          max: 8,
-        },
-        format: wNumb({
-          decimals: 0,
-        }),
-        pips: {
-          mode: "values",
-          density: 100,
-
-          values: [2, 3, 4, 5, 6, 7, 8],
-          stepped: true,
-          format: wNumb({
-            decimals: 0,
-          }),
-        },
-      });
-      noUiSlider.create(mySliderWeekly, {
-        start: [5],
-        connect: "lower",
-        range: {
-          min: 2,
-          max: 40,
-        },
-        format: wNumb({
-          decimals: 0,
-        }),
-      });
-      //Slider Pips
-      var pips = mySlider.querySelectorAll(".noUi-value");
-      var pipsMonth = mySliderMonth.querySelectorAll(".noUi-value");
-      var pipsYear = mySliderYear.querySelectorAll(".noUi-value");
-
-      //Slider Input Element
-      var inputMonthFormat = document.getElementById("SetMonthRange");
-      var inputFormat = document.getElementById("SetRange");
-
-      SetPipsOnSlider(pips, mySlider);
-      SetPipsOnSlider(pipsMonth, mySliderMonth);
-      SetPipsOnSlider(pipsYear, mySliderYear);
-      mySlider.noUiSlider.on("update", function (values, handle) {
-        SelectedAmount = AmountFormat.from(values[handle]);
-        CalculateAmount();
-      });
-
-      inputFormat.addEventListener("change", function () {
-        mySlider.noUiSlider.set(this.value);
-      });
-      mySliderMonth.noUiSlider.on("update", function (values, handle) {
-        selectedTime = {
-          type: "month",
-          value: TimeFormatMonths.from(values[handle]),
-        };
-
-        CalculateAmount();
-      });
-
-      mySliderWeekly.noUiSlider.on("update", function (values, handle) {
-        selectedTime = {
-          type: "week",
-          value: TimeFormatWeeks.from(values[handle]),
-        };
-
-        CalculateAmount();
-      });
-      mySliderYear.noUiSlider.on("update", function (values, handle) {
-
-        if ($("#yearTab").hasClass("active")) {
-          selectedTime = {
-            type: "year",
-            value: TimeFormatYears.from(values[handle]),
-          };
-
-          CalculateAmount();
-        }
-      });
-      inputMonthFormat.addEventListener("change", function () {
-        if ($("#monthTab.active").length > 0) {
-          mySliderMonth.noUiSlider.set(this.value);
-        } else if ($("#yearTab.active").length > 0) {
-          mySliderYear.noUiSlider.set(this.value);
-        } else if ($("#weekTab.active").length > 0) {
-          mySliderWeekly.noUiSlider.set(this.value);
-        } else {
-          mySliderMonth.noUiSlider.set(this.value);
-        }
-      });
-
-      $("#yearTab-tab").on("click", function () {
-        $(".active_bar").removeClass("left");
-        mySliderYear.noUiSlider.on("update", function (values, handle) {
-          selectedTime = {
-            type: "year",
-            value: TimeFormatYears.from(values[handle]),
-          };
-          CalculateAmount();
-        });
-      });
-      $("#monthTab-tab").on("click", function () {
-        $(".active_bar").addClass("left");
-        mySliderMonth.noUiSlider.on("update", function (values, handle) {
-          selectedTime = {
-            type: "months",
-            value: TimeFormatMonths.from(values[handle]),
-          };
-          CalculateAmount();
-        });
-      });
-      // Weekly duration is not used by Muyanalo.
-      $("#weekTab-tab").on("click", function () {
-        $(".active_bar").removeClass("left");
-        mySliderWeekly.noUiSlider.on("update", function (values, handle) {
-          selectedTime = {
-            type: "Weeks",
-            value: TimeFormatWeeks.from(values[handle]),
-          };
-          CalculateAmount();
-        });
-      });
-    }
-    if (SliderAmount && SliderPeriod) {
-      noUiSlider.create(SliderAmount, {
-        start: [100000],
-        connect: "lower",
-        range: {
-          min: 5000,
-          max: 250000,
-        },
-        format: wNumb({
-          decimals: 0,
-          thousand: ",",
-          prefix: "$ ",
-        }),
-      });
-      noUiSlider.create(SliderPeriod, {
-        start: [3],
-        connect: "lower",
-        range: {
-          min: 1,
-          max: 5,
-        },
-        format: wNumb({
-          decimals: 0,
-          suffix: " year",
-        }),
-      });
-
-      var SliderAmountFormat = document.getElementById("SetSliderAmount");
-      var SliderPeriodFormat = document.getElementById("SetSliderPeriod");
-
-      SliderAmount.noUiSlider.on("update", function (values, handle) {
-        SliderAmountFormat.value = values[handle];
-      });
-      SliderPeriod.noUiSlider.on("update", function (values, handle) {
-        SliderPeriodFormat.value = values[handle];
-      });
-
-      SliderAmountFormat.addEventListener("change", function () {
-        SliderAmount.noUiSlider.set(this.value);
-      });
-      SliderPeriodFormat.addEventListener("change", function () {
-        SliderPeriod.noUiSlider.set(this.value);
-      });
-    }
-
-    if (mySliderROI) {
-      noUiSlider.create(mySliderROI, {
-        start: [8],
-        connect: "lower",
-        range: {
-          min: 5,
-          max: 30,
-        },
-        format: wNumb({
-          decimals: 0,
-        }),
-      });
-
-      var inputRoiFormat = document.getElementById("SetRoiRange");
-
-      mySliderROI.noUiSlider.on("update", function (values, handle) {
-        inputRoiFormat.value = values[handle];
-        SelectedRoi = RoiFormat.from(values[handle]);
-        CalculateAmount();
-      });
-
-      inputRoiFormat.addEventListener("change", function () {
-        mySliderROI.noUiSlider.set(this.value);
-      });
-    }
-
-    function CalculateAmount() {
-      if (selectedTime.type === "month") {
-        var LoanTime = selectedTime.value;
-        switch (true) {
-          case LoanTime >= 48:
-            RateOfInterestTime = 2.4;
-            break;
-          case LoanTime >= 42:
-            RateOfInterestTime = 2.55;
-            break;
-          case LoanTime >= 32:
-            RateOfInterestTime = 2.7;
-            break;
-          case LoanTime >= 25:
-            RateOfInterestTime = 2.9;
-            break;
-          case LoanTime >= 20:
-            RateOfInterestTime = 3;
-            break;
-          case LoanTime >= 12:
-            RateOfInterestTime = 3.15;
-            break;
-          default:
-            RateOfInterestTime = 0;
-        }
-      }
-      if (selectedTime.type === "year") {
-        var LoanTime = selectedTime.value;
-        switch (true) {
-          case LoanTime >= 8:
-            RateOfInterestTime = 2;
-            break;
-          case LoanTime >= 7:
-            RateOfInterestTime = 2.2;
-            break;
-          case LoanTime >= 6:
-            RateOfInterestTime = 2.3;
-            break;
-          case LoanTime >= 5:
-            RateOfInterestTime = 2.5;
-            break;
-          case LoanTime >= 4:
-            RateOfInterestTime = 2.7;
-            break;
-          case LoanTime >= 3:
-            RateOfInterestTime = 2.9;
-            break;
-          case LoanTime >= 2:
-            RateOfInterestTime = 3.1;
-            break;
-
-          default:
-            RateOfInterestTime = 0;
-        }
-      }
-      if (typeof SelectedAmount === "number") {
-        var LoanAmount = SelectedAmount;
-        switch (true) {
-          case LoanAmount >= 13e4:
-            RateOfInterestAmount = 2.9;
-            break;
-          case LoanAmount >= 115e3:
-            RateOfInterestAmount = 3.1;
-            break;
-          case LoanAmount >= 1e5:
-            RateOfInterestAmount = 3.3;
-            break;
-          case LoanAmount >= 8e4:
-            RateOfInterestAmount = 3.5;
-            break;
-          case LoanAmount >= 65e3:
-            RateOfInterestAmount = 3.7;
-            break;
-          case LoanAmount >= 5e4:
-            RateOfInterestAmount = 3.8;
-            break;
-          case LoanAmount >= 25e3:
-            RateOfInterestAmount = 3.95;
-            break;
-          case LoanAmount >= 1e4:
-            RateOfInterestAmount = 4;
-            break;
-          default:
-            RateOfInterestAmount = 4.09;
-        }
-      }
-
-      var TotalRateOfInterest = 0.40;
-
-      var TotalInterest = SelectedAmount * TotalRateOfInterest;
-
-      var InterestAndPrincipal = SelectedAmount + TotalInterest;
-
-      if ($(inputFormat).hasClass("noTextMerge")) {
-        inputFormat.value = AmountFormatNoMerge.to(SelectedAmount);
-      } else {
-        inputFormat.value = AmountFormat.to(SelectedAmount);
-      }
-
-      $(".LoanTotalAmount").text(AmountFormat.to(InterestAndPrincipal) + "*");
-
-      if ($(inputMonthFormat).hasClass("noTextMerge")) {
-        inputMonthFormat.value = selectedTime.value;
-      } else {
-        inputMonthFormat.value = selectedTime.value + " " + selectedTime.type;
-      }
-
-      if ($(".LoanTotalDuration").length) {
-        $(".LoanTotalDuration").text(
-          selectedTime.value + " " + selectedTime.type
-        );
-        if (selectedTime.type) {
-          $(".loanTermIndicator").text(selectedTime.type.charAt(0));
-        }
-      }
-
-      $("#emiAmount").text(
-        AmountFormat.to(InterestAndPrincipal / selectedTime.value) + "*"
-      );
-      $("#InterestPayable").text(AmountFormat.to(TotalInterest) + "*");
-      $("#InterestAmount").text(
-          (TotalRateOfInterest * 100).toFixed(0) + "%"
-      );
-
-      var loanGraphEl = $("#loan_graph_circle");
-      var percent = (100 * TotalInterest) / InterestAndPrincipal;
-      loanGraphEl
-        .find($(".left-side"))
-        .css({ transform: "rotate(" + percent * 3.6 + "deg)" });
-
-      if (percent <= 50) {
-        loanGraphEl.find($(".right-side")).css({ display: "none" });
-      } else if (percent > 50) {
-        loanGraphEl.find($(".right-side")).css({ transform: "rotate(180deg)" });
-        loanGraphEl
-          .find($(".pie"))
-          .css({ clip: "rect(auto, auto, auto, auto)" });
-      }
-    }
-
-    if ($("#loanStartDate").length) {
-      $("#loanStartDate").flatpickr({
-        altInput: true,
-        altFormat: "F j, Y",
-        dateFormat: "Y-m-d",
-      });
-      $("#loanEndDate").flatpickr({
-        altInput: true,
-        altFormat: "F j, Y",
-        dateFormat: "Y-m-d",
-      });
-    } // End of Calculator
 
     /*------------ Added Dark Mode ------------*/
     function createCookie(name, value, days) {
@@ -1010,4 +564,158 @@
       }
     }, 3000);
   }
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+
+    // Calculator elements
+    const loanAmountSlider = document.getElementById("loanAmountSlider");
+    const loanDurationSlider = document.getElementById("loanDurationSlider");
+
+    const loanAmountDisplay = document.getElementById("loanAmountDisplay");
+    const loanDurationDisplay = document.getElementById("loanDurationDisplay");
+
+    const totalPayableDisplay = document.getElementById("totalPayable");
+    const interestPayableDisplay = document.getElementById("interestPayable");
+    const monthlyInstalmentDisplay = document.getElementById("monthlyInstalment");
+
+    const pieChart = document.getElementById("loanPieChart");
+
+    // Interest rate
+    const interestRate = 40;
+
+
+    // Format currency
+    function formatCurrency(amount) {
+      return "R" + amount.toLocaleString("en-ZA", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+
+
+    // Update slider background
+    function updateSliderBackground(slider) {
+
+      const min = Number(slider.min);
+      const max = Number(slider.max);
+      const value = Number(slider.value);
+
+      const percentage = ((value - min) / (max - min)) * 100;
+
+      slider.style.setProperty("--progress", percentage + "%");
+    }
+
+
+    // Main calculation function
+    function calculateLoan() {
+
+      const loanAmount = Number(loanAmountSlider.value);
+      const loanDuration = Number(loanDurationSlider.value);
+
+      // Calculate interest
+      const interest = loanAmount * (interestRate / 100);
+
+      // Calculate total payable
+      const totalPayable = loanAmount + interest;
+
+      // Calculate monthly instalment
+      const monthlyInstalment = totalPayable / loanDuration;
+
+
+      // Update read-only textboxes
+      loanAmountDisplay.value = formatCurrency(loanAmount);
+
+      loanDurationDisplay.value =
+          loanDuration + (loanDuration === 1 ? " Month" : " Months");
+
+
+      // Update results
+      totalPayableDisplay.textContent = formatCurrency(totalPayable);
+
+      interestPayableDisplay.textContent = formatCurrency(interest);
+
+      monthlyInstalmentDisplay.textContent =
+          formatCurrency(monthlyInstalment);
+
+
+      // Update circular graph
+      const interestPercentage = (interest / totalPayable) * 100;
+      const interestDegrees = interestPercentage * 3.6;
+
+      pieChart.style.background = `
+            conic-gradient(
+                #c218ff 0deg ${interestDegrees}deg,
+                #3185e9 ${interestDegrees}deg 360deg
+            )
+        `;
+
+
+      // Update slider backgrounds
+      updateSliderBackground(loanAmountSlider);
+      updateSliderBackground(loanDurationSlider);
+
+    }
+
+
+    // Listen for loan amount changes
+    loanAmountSlider.addEventListener("input", calculateLoan);
+
+
+    // Listen for loan duration changes
+    loanDurationSlider.addEventListener("input", calculateLoan);
+
+
+    // Initial calculation
+    calculateLoan();
+
+  });
+
+// nav link activation  //
+  document.addEventListener("DOMContentLoaded", function () {
+
+    // Get the current page
+    let currentPage = window.location.pathname
+        .split("/")
+        .pop()
+        .toLowerCase();
+
+    if (currentPage === "") {
+      currentPage = "index.html";
+    }
+
+    // Group application pages under Apply
+    const pageGroups = {
+      "personal-details.html": "loan.html",
+      "document-upload.html": "loan.html"
+    };
+
+    // Check whether the current page belongs to another menu item
+    currentPage = pageGroups[currentPage] || currentPage;
+
+    // Get navigation links
+    const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+
+    navLinks.forEach(function (link) {
+
+      // Get the page linked to each menu item
+      let linkPage = link.getAttribute("href")
+          .split("/")
+          .pop()
+          .toLowerCase();
+
+      // Remove active from all links
+      link.classList.remove("active");
+
+      // Activate only the matching page
+      if (linkPage === currentPage) {
+        link.classList.add("active");
+      }
+
+
+    });
+
+  });
+
 })(jQuery);
